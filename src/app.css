@@ -1,0 +1,52 @@
+:root {
+   --black: hsl(230 24% 24%);
+   --mirage: hsl(230 12% 12%);
+   --perano: hsl(230 100% 85%);
+   --biloba: hsl(250 100% 85%);
+   --bilobaAlpha: hsl(250 100% 85% / 0.5);
+   --plum: hsl(310 75% 80%);
+   --manhattan: hsl(30 100% 80%);
+}
+
+html {
+   font-family: -apple-system,
+                BlinkMacSystemFont,
+                Segoe UI,
+                Helvetica,
+                Arial,
+                sans-serif,
+                Apple Color Emoji,
+                Segoe UI Emoji;
+   height: 100%;
+}
+
+body {
+   background-color: var(--mirage);
+   border-top: 4px solid var(--perano);
+   color: var(--perano);
+   display: grid;
+   gap: 40px;
+   grid-template-columns: 300px minmax(0, 1fr);
+   min-height: 100%;
+   padding: 20px;
+}
+
+main {
+   background-color: white;
+   border-radius: 14px;
+   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+   transition: all 0.25s ease;
+}
+
+.dark main {
+   background-color: var(--black);
+}
+
+hr {
+   background-color: var(--black);
+   border: none;
+   height: 2px;
+   margin: 10px 0 30px;
+   padding: 0;
+   width: 100%;
+}

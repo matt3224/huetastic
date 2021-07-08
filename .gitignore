@@ -1,0 +1,10 @@
+.DS_Store
+node_modules
+/.svelte-kit
+/package
+.nova
+pnpm-lock.yaml
+package-lock.json
+build
+functions
+.env
