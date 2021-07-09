@@ -3,6 +3,12 @@
    <slot />
    <footer class="foot">
       <div class="made">Made by Design™</div>
+      <div class="layout" on:click="{() => document.body.classList.toggle('grid')}">
+         <div class="glyph"></div>
+         <div class="glyph"></div>
+         <div class="glyph"></div>
+         <div class="glyph"></div>
+      </div>
       <div class="mode" on:click="{() => document.body.classList.toggle('dark')}">
          <svg class="sun"><use xlink:href="/icons.svg#sun" /></svg>
          <svg class="moon"><use xlink:href="/icons.svg#moon" /></svg>
@@ -27,7 +33,6 @@
    .foot {
       align-items: center;
       display: flex;
-      justify-content: space-between;
       margin-top: auto;
    }
    
@@ -40,6 +45,7 @@
       background-position: 100%;
       cursor: pointer;
       font-weight: 600;
+      margin-right: auto;
       padding: 0;
       transition: background-position 275ms ease;
    }
@@ -52,17 +58,34 @@
       background-position: 0 100%
    }
    
-   .mode {
+   .mode,
+   .layout {
       background-color: var(--perano);
       border-radius: 50%;
       cursor: pointer;
       height: 44px;
-      margin: -4px;
+      margin: -4px -4px -4px 16px;
       overflow: hidden;
       width: 44px;
    }
    
-   .sun, .moon {
+   .layout {
+      display: grid;
+      gap: 3px;
+      grid-template-columns: repeat(4, 6px);
+      grid-template-rows: repeat(1, 10px);
+      place-content: center;
+   }
+   
+   .glyph {
+      background-color: var(--mirage);
+      border-radius: 2px;
+      height: 100%;
+      width: 100%;
+   }
+   
+   .sun,
+   .moon {
       fill: var(--mirage);
       height: 20px;
       position: absolute;
@@ -95,5 +118,10 @@
       fill: var(--perano);
       left: 50%;
       top: 50%;
+   }
+   
+   :global(.grid .layout) {
+      grid-template-columns: repeat(2, 6px);
+      grid-template-rows: repeat(2, 8px);
    }
 </style>
