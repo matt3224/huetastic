@@ -5,15 +5,7 @@
    import Range from '$lib/Range.svelte'
    import Ribbon from '$lib/Ribbon.svelte'
    import Topic from '$lib/Topic.svelte'
-   
-   let count = 12
-   let shift = 0
-   let jump = -30
-   let hue = 360
-   let sat = 100
-   let lig = 48
-   let sat2 = 100
-   let lig2 = 48
+   import { data } from '$lib/store.js'
 </script>
 
 <svelte:head>
@@ -21,29 +13,57 @@
 </svelte:head>
 
 <Sidebar>
-   <Range title="Count" min="{6}" bind:value="{count}" />
-   <Range title="Shift" max="{count}" bind:value="{shift}" />
-   <Range title="Jump" min="-100" bind:value="{jump}" />
-   <Range title="Hue" max="360" bind:value="{hue}" />
+   <Range title="Count" min="6" bind:value="{$data.count}" />
+   <Range title="Shift" max="{$data.count}" bind:value="{$data.shift}" />
+   <Range title="Jump" min="-100" bind:value="{$data.jump}" />
+   <Range title="Hue" max="360" bind:value="{$data.hue}" />
    <hr />
-   <Range title="Saturation" bind:value="{sat}" />
-   <Range title="Lightness" bind:value="{lig}" />
+   <Range title="Saturation" bind:value="{$data.sat}" />
+   <Range title="Lightness" bind:value="{$data.lig}" />
    <hr />
-   <Range title="Saturation" bind:value="{sat2}" />
-   <Range title="Lightness" bind:value="{lig2}" />
+   <Range title="Saturation" bind:value="{$data.sat2}" />
+   <Range title="Lightness" bind:value="{$data.lig2}" />
+   <hr />
+   <button class="reset" on:click="{() => data.reset()}">
+      <svg class="icon"><use xlink:href="/icons.svg#reset" /></svg>
+   </button>
 </Sidebar>
 
 <main>
    <Ribbon>
-      {#each Array(count).fill() as _, i}
+      {#each Array($data.count).fill() as _, i}
          <Topic
-            --jump="{ jump }"
-            --hue="{ (hue / count) * (i + shift) }"
-            --sat="{ sat }%"
-            --lig="{ lig }%"
-            --sat2="{ sat2 }%"
-            --lig2="{ lig2 }%"
+            --jump="{ $data.jump }"
+            --hue="{ ($data.hue / $data.count) * (i + $data.shift) }"
+            --sat="{ $data.sat }%"
+            --lig="{ $data.lig }%"
+            --sat2="{ $data.sat2 }%"
+            --lig2="{ $data.lig2 }%"
          />
       {/each}
    </Ribbon>
 </main>
+
+<style>
+   .load,
+   .save {
+      inset: auto 40px 40px auto;
+      position: absolute;
+      z-index: 1;
+   }
+   
+   .load {
+      right: 100px;
+   }
+   
+   .reset {
+      display: inline-block;
+      place-self: flex-start;
+      padding: 0;
+   }
+   
+   .icon {
+      height: 24px;
+      width: 24px;
+   }
+</style>
