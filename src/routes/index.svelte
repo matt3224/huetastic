@@ -33,10 +33,10 @@
    <Ribbon>
       {#each Array($data.count).fill() as _, i}
          <Topic
-            --jump="{ $data.jump }"
-            --hue="{ ($data.hue / $data.count) * (i + $data.shift) }"
-            --sat="{ $data.sat }%"
-            --lig="{ $data.lig }%"
+            --hue1="{ ($data.hue / $data.count) * (i + $data.shift) }"
+            --sat1="{ $data.sat }%"
+            --lig1="{ $data.lig }%"
+            --hue2="{ (($data.hue / $data.count) * (i + $data.shift)) + $data.jump }"
             --sat2="{ $data.sat2 }%"
             --lig2="{ $data.lig2 }%"
          />

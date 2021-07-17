@@ -1,9 +1,29 @@
-<div class="topic"></div>
+<script>
+   import { fly } from 'svelte/transition'
+   
+   let copied = false
+   
+   async function copy({ target }) {
+      const from = getComputedStyle(target).getPropertyValue('--from')
+      const to = getComputedStyle(target).getPropertyValue('--to')
+      
+      await navigator.clipboard.writeText(`radial-gradient(0% 0%, ${from}, ${to})`)
+      
+      copied = true
+      setTimeout(() => copied = false, 3000)
+   }
+</script>
+
+<div class="topic" on:click="{copy}">
+   {#if copied}
+      <div class="copied" in:fly="{{ y: 30 }}" out:fly="{{ y: -30 }}">Copied</div>
+   {/if}
+</div>
 
 <style>
    .topic {
-      --hsl: hsl(var(--hue) var(--sat) var(--lig));
-      --hsl2: hsl(calc(var(--hue) + var(--jump)) var(--sat2) var(--lig2));
+      --from: hsl(var(--hue1) var(--sat1) var(--lig1));
+      --to: hsl(var(--hue2) var(--sat2) var(--lig2));
       
       cursor: pointer;
       position: relative;
@@ -13,7 +33,7 @@
    
    .topic::before,
    .topic::after {
-      background-image: -webkit-radial-gradient(0% 0%, var(--hsl), var(--hsl2));
+      background-image: -webkit-radial-gradient(0% 0%, var(--from), var(--to));
       border-radius: 14px;
       background-size: 100%;
       content: '';
@@ -49,5 +69,17 @@
    
    :global(.dark .topic::before) {
       opacity: 0.5;
+   }
+   
+   .copied {
+      color: rgba(255,255,255,1);
+      display: grid;
+      font-size: 20px;
+      font-weight: 600;
+      inset: 0;
+      mix-blend-mode: overlay;
+      place-content: center;
+      position: absolute;
+      z-index: 2;
    }
 </style>
